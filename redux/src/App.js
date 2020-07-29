@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import logo from './logo.svg';
 import {incrementar, decrementar, setear} from './reducers'
+import UserForm from './components/UserForm'
 import './App.css';
 
 class App extends Component {
@@ -14,16 +15,23 @@ class App extends Component {
     const { name, value } = e.target 
     this.setState({[name]: value})
   }
+  handleSubmit = payload => {
+
+  }
   render(){
     const {incrementar, decrementar, valor} = this.props
     console.log(this.state)
     return (
       <div className="App">
+
+        <UserForm onSubmit= {this.handleSubmit} />
+
         <p>{valor}</p>
         <button onClick={incrementar}>Incrementar</button>
         <button onClick={decrementar}>Decrementar</button>
         <input name="valor" onChange={this.handleChange}/>
         <button onClick={this.handleSetear}>Setear</button>
+        
       </div>
     );
   }
@@ -32,7 +40,7 @@ class App extends Component {
 
 const mapStateToProps = state => { //Recibe el estado completo y la principal funcion es adaptar este estado a entregarle a nuestro componente de app
   return {
-    valor: state,
+    valor: state.contador,
   }
 }
 const mapDispatchToProps = dispatch =>({ // Vamos aconstruir un objeto cuya propiedades se le tiene que pasar a App, osea la propiedad que cree aca va a aparecer disponible en nuestro app
