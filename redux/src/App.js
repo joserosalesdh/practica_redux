@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import logo from './logo.svg';
-import {incrementar, decrementar, setear} from './reducers'
+import { binActionCreators, bindActionCreators } from 'redux' // Lo que hace es de que va a tomar todos los action creators y los va a despachar con dispatch, sin necesidad de que tengamos que declararlos en las propiedades uno a uno
+import * as duck from './reducers'
 import UserForm from './components/UserForm'
 import './App.css';
 
@@ -43,10 +43,12 @@ const mapStateToProps = state => { //Recibe el estado completo y la principal fu
     valor: state.contador,
   }
 }
-const mapDispatchToProps = dispatch =>({ // Vamos aconstruir un objeto cuya propiedades se le tiene que pasar a App, osea la propiedad que cree aca va a aparecer disponible en nuestro app
-  incrementar: () => dispatch(incrementar()),
-  decrementar: () => dispatch(decrementar()),
-  setear: payload => dispatch(setear(payload)), //Cuando ejecutemos la funcion de setear, que va a quedar disponible en las propiedades 
+// const mapDispatchToProps = dispatch =>({ // Vamos aconstruir un objeto cuya propiedades se le tiene que pasar a App, osea la propiedad que cree aca va a aparecer disponible en nuestro app
+//   incrementar: () => dispatch(incrementar()),
+//   decrementar: () => dispatch(decrementar()),
+//   setear: payload => dispatch(setear(payload)), //Cuando ejecutemos la funcion de setear, que va a quedar disponible en las propiedades 
   
-})
+// })
+const mapDispatchToProps = dispatch => bindActionCreators(duck, dispatch)
+
 export default connect(mapStateToProps, mapDispatchToProps) (App); // El primer parentesis es la primera vez de que nosotros la ejecutemos vamos a tener que pasarle dos argumentos 
